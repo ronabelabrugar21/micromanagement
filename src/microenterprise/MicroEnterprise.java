@@ -35,54 +35,101 @@ public class MicroEnterprise {
                 try (Connection connection = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD)) {
                     Products products = new Products();
 
+                    // Create the products table if it doesn't exist
                     products.createTable(connection);
-                    System.out.println("\nMicro Enterprise Management System");
-                    System.out.println("[Seller] Adding Products. \nPlease enter NA if Not Applicable");
 
-                    System.out.print("Name: ");
-                    String name = scanner.nextLine();
-                    System.out.print("Price: ");
-                    double price = scanner.nextDouble();
-                    System.out.print("Stock: ");
-                    int stock = scanner.nextInt();
-                    scanner.nextLine(); 
-                    System.out.print("Code: ");
-                    String code = scanner.nextLine();
-                    System.out.print("Date: ");
-                    String dateAdded = scanner.nextLine();
-                    System.out.print("Details: ");
-                    String details = scanner.nextLine();
+                    while (true) {
+                        // Display menu
+                        System.out.println("\nMicro Enterprise Management System");
+                        System.out.println("[Seller] Choose your option number.");
+                        System.out.println("[1] Add Products");
+                        System.out.println("[2] Delete Products");
+                        System.out.println("[3] Update Products");
+                        System.out.println("[4] View Products");
+                        System.out.println("[5] History Transactions");
+                        System.out.println("[6] Contacts");
+                        System.out.println("[0] Exit");
+                        System.out.print("\nEnter Here: ");
 
-                    // Add product
-                    products.addProduct(connection, name, price, stock, code, dateAdded, details);
+                        // Get user choice
+                        int choice = scanner.nextInt();
+                        scanner.nextLine(); // Consume the newline character
 
-                    // Added successfully
-                    System.out.println("\nProduct added successfully.");
+                        // Perform the selected action
+                        switch (choice) {
+                            case 1:
+                                // Add Products
+                                System.out.println("\nMicro Enterprise Management System");
+                                System.out.println("[Seller] Adding Products. \nPlease enter NA if Not Applicable");
 
-                    // View prduct
-                    System.out.println("\nMicro Enterprise Management System");
-                    System.out.println("[Seller] View Products.");
+                                System.out.print("\nName: ");
+                                String name = scanner.nextLine();
+                                System.out.print("Price: ");
+                                double price = scanner.nextDouble();
+                                System.out.print("Stock: ");
+                                int stock = scanner.nextInt();
+                                scanner.nextLine(); 
+                                System.out.print("Code: ");
+                                String code = scanner.nextLine();
+                                System.out.print("Date: ");
+                                String dateAdded = scanner.nextLine();
+                                System.out.print("Details: ");
+                                String details = scanner.nextLine();
 
-                    // View certain product
-                    List<String> productList = products.viewProducts(connection, "", "");
+                                // Add product
+                                products.addProduct(connection, name, price, stock, code, dateAdded, details);
 
-                    // Display the product
-                    System.out.println("\nProducts:");
-                    for (int i = 0; i < productList.size(); i++) {
-                        System.out.println((i + 1) + ". " + productList.get(i));
-                    }
+                                // Added successfully
+                                System.out.println("\nProduct added successfully.");
+                                break;
 
-                    System.out.println("\nSearch the product to view:");
-                    System.out.print("Name: ");
-                    String searchName = scanner.nextLine();
-                    System.out.print("Code: ");
-                    String searchCode = scanner.nextLine();
+                            case 2:
+                                // Delete Products (Implement as needed)
+                                System.out.println("Delete Products functionality not implemented yet.");
+                                break;
 
-                    productList = products.viewProducts(connection, searchName, searchCode);
+                            case 3:
+                                // Update Products (Implement as needed)
+                                System.out.println("Update Products functionality not implemented yet.");
+                                break;
 
-                    System.out.println("\nFiltered Products:");
-                    for (int i = 0; i < productList.size(); i++) {
-                        System.out.println((i + 1) + ". " + productList.get(i));
+                            case 4:
+                                // View certain product
+                                List<String> productList = products.viewProducts(connection, "", "");
+                                
+                                //still don't have view all products code here. soon.
+
+                                System.out.println("\nSearch the product to view:");
+                                System.out.print("Name: ");
+                                String searchName = scanner.nextLine();
+                                System.out.print("Code: ");
+                                String searchCode = scanner.nextLine();
+
+                                productList = products.viewProducts(connection, searchName, searchCode);
+
+                                System.out.println("\nFiltered Products:");
+                                for (int i = 0; i < productList.size(); i++) {
+                                    System.out.println((i + 1) + ". " + productList.get(i));
+                                }
+                            case 5:
+                                // History Transactions
+                                System.out.println("History Transactions");
+                                break;
+
+                            case 6:
+                                // Contacts
+                                System.out.println("Contacts");
+                                break;
+
+                            case 0:
+                                // Exit
+                                System.out.println("Exited");
+                                System.exit(0);
+
+                            default:
+                                System.out.println("Invalid choice. Please enter a valid option.");
+                                break;
+                        }
                     }
 
                 } catch (SQLException e) {

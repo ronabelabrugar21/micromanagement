@@ -40,30 +40,30 @@ public class Products {
     }
 
     public List<String> viewProducts(Connection connection, String searchName, String searchCode) {
-        List<String> result = new ArrayList<>();
+    List<String> result = new ArrayList<>();
 
-        String selectProductsSQL = "SELECT * FROM products WHERE (name LIKE ? OR ? IS NULL) AND (code = ? OR ? IS NULL)";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(selectProductsSQL)) {
-            preparedStatement.setString(1, "%" + searchName + "%");
-            preparedStatement.setString(2, searchName);
-            preparedStatement.setString(3, searchCode);
-            preparedStatement.setString(4, searchCode);
+    String selectProductsSQL = "SELECT * FROM products WHERE (name LIKE ? OR ? IS NULL) AND (code = ? OR ? IS NULL)";
+    try (PreparedStatement preparedStatement = connection.prepareStatement(selectProductsSQL)) {
+        preparedStatement.setString(1, "%" + searchName + "%");
+        preparedStatement.setString(2, searchName);
+        preparedStatement.setString(3, searchCode);
+        preparedStatement.setString(4, searchCode);
 
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                while (resultSet.next()) {
-                    String productName = resultSet.getString("name");
-                    double productPrice = resultSet.getDouble("price");
-                    int productStock = resultSet.getInt("stock");
-                    String productCode = resultSet.getString("code");
-                    String productDateAdded = resultSet.getString("date_added");
+        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            while (resultSet.next()) {
+                String productName = resultSet.getString("name");
+                double productPrice = resultSet.getDouble("price");
+                int productStock = resultSet.getInt("stock");
+                String productCode = resultSet.getString("code");
+                String productDateAdded = resultSet.getString("date_added");
 
-                    result.add(String.format("[%s, $%.2f, %d Pcs., %s, %s]", productName, productPrice, productStock, productCode, productDateAdded));
-                }
+                result.add(String.format("[%s, $%.2f, %d Pcs., %s, %s]", productName, productPrice, productStock, productCode, productDateAdded));
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-
-        return result;
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+
+    return result;
+}
 }
