@@ -84,13 +84,62 @@ public class MicroEnterprise {
                                 break;
 
                             case 2:
-                                // Delete Products (Implement as needed)
-                                System.out.println("Delete Products functionality not implemented yet.");
+                                // Delete Products
+                                System.out.println("Delete Products");
+                                Delete delete = new Delete();
+
+                                // Get details of the product to delete
+                                System.out.print("Enter the name of the product to delete: ");
+                                String productNameToDelete = scanner.nextLine();
+                                System.out.print("Enter the code of the product to delete: ");
+                                String productCodeToDelete = scanner.nextLine();
+
+                                // Perform deletion
+                                boolean isDeleted = delete.deleteProduct(productNameToDelete, productCodeToDelete);
+
+                                if (isDeleted) {
+                                    System.out.println("Product was Deleted successfully.");
+                                } else {
+                                    System.out.println("Product not found or deletion failed.");
+                                }
                                 break;
 
-                            case 3:
-                                // Update Products (Implement as needed)
-                                System.out.println("Update Products functionality not implemented yet.");
+
+                           case 3:
+                                System.out.println("\nMicro Enterprise Management System");
+                                System.out.println("[Seller] Updating Products.");
+
+                                // Get details of the product to update
+                                System.out.print("\nEnter the Product ID to update: ");
+                                int productIdToUpdate = scanner.nextInt();
+                                scanner.nextLine(); // Consume the newline character
+
+                                String updatedProductName = "";
+                                while (updatedProductName.trim().isEmpty()) {
+                                    System.out.print("Enter updated Name of the product: ");
+                                    updatedProductName = scanner.nextLine().trim();
+                                    if (updatedProductName.isEmpty()) {
+                                        System.out.println("Product name cannot be empty. Please enter a valid Product name.");
+                                    }
+                                }
+
+                                String updatedProductCode = "";
+                                while (updatedProductCode.trim().isEmpty()) {
+                                    System.out.print("Enter updated Code of the product: ");
+                                    updatedProductCode = scanner.nextLine().trim();
+                                    if (updatedProductCode.isEmpty()) {
+                                        System.out.println("Product code cannot be empty. Please enter a valid Product code.");
+                                    }
+                                }
+
+                                // Perform update using the Update class method
+                                boolean isUpdated = Update.updateProduct(productIdToUpdate, updatedProductName, updatedProductCode);
+
+                                if (isUpdated) {
+                                    System.out.println("Product update successful!");
+                                } else {
+                                    System.out.println("Product update failed. No matching records found.");
+                                }
                                 break;
 
                             case 4:
@@ -111,9 +160,13 @@ public class MicroEnterprise {
                                 for (int i = 0; i < productList.size(); i++) {
                                     System.out.println((i + 1) + ". " + productList.get(i));
                                 }
+                                break;
                             case 5:
+                                 System.out.println("History Transactions");
+                                Transactions Transactions = new Transactions();
+                                 Transactions.displayTransactionHistory(connection);
                                 // History Transactions
-                                System.out.println("History Transactions");
+                               
                                 break;
 
                             case 6:
