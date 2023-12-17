@@ -34,9 +34,10 @@ public class MicroEnterprise {
 
                 try (Connection connection = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD)) {
                     Products products = new Products();
-
-                    // Create the products table if it doesn't exist
                     products.createTable(connection);
+                    
+                    Add addProducts = new Add(scanner);
+                    View viewProducts = new View(scanner);
 
                     while (true) {
                         // Display menu
@@ -53,33 +54,12 @@ public class MicroEnterprise {
 
                         // Get user choice
                         int choice = scanner.nextInt();
-                        scanner.nextLine(); // Consume the newline character
+                        scanner.nextLine(); 
 
-                        // Perform the selected action
                         switch (choice) {
                             case 1:
-                                // Add Products
-                                System.out.println("\nMicro Enterprise Management System");
-                                System.out.println("[Seller] Adding Products. \nPlease enter NA if Not Applicable");
-
-                                System.out.print("\nName: ");
-                                String name = scanner.nextLine();
-                                System.out.print("Price: ");
-                                double price = scanner.nextDouble();
-                                System.out.print("Stock: ");
-                                int stock = scanner.nextInt();
-                                scanner.nextLine(); 
-                                System.out.print("Code: ");
-                                String code = scanner.nextLine();
-                                System.out.print("Date: ");
-                                String dateAdded = scanner.nextLine();
-                                System.out.print("Details: ");
-                                String details = scanner.nextLine();
-
-                                // Add product
-                                products.addProduct(connection, name, price, stock, code, dateAdded, details);
-
-                                // Added successfully
+                                //Add Products
+                                addProducts.addProduct(connection);
                                 System.out.println("\nProduct added successfully.");
                                 break;
 
@@ -144,29 +124,7 @@ public class MicroEnterprise {
 
                             case 4:
                                 // View certain product
-                                List<String> productList = products.viewProducts(connection, "", "");
-                                
-                                //still don't have view all products code here. soon.
-
-                                System.out.println("\nSearch the product to view:");
-                                System.out.print("Name: ");
-                                String searchName = scanner.nextLine();
-                                System.out.print("Code: ");
-                                String searchCode = scanner.nextLine();
-
-                                productList = products.viewProducts(connection, searchName, searchCode);
-
-                                System.out.println("\nFiltered Products:");
-                                for (int i = 0; i < productList.size(); i++) {
-                                    System.out.println((i + 1) + ". " + productList.get(i));
-                                }
-                                break;
-                            case 5:
-                                 System.out.println("History Transactions");
-                                Transactions Transactions = new Transactions();
-                                 Transactions.displayTransactionHistory(connection);
-                                // History Transactions
-                               
+                                viewProducts.viewProducts(connection);
                                 break;
 
                             case 6:
