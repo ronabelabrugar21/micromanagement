@@ -134,7 +134,7 @@ public class MicroEnterprise {
 
                             case 0:
                                 // Exit
-                                System.out.println("Exited");
+                                System.out.println("The program has exited.");
                                 System.exit(0);
 
                             default:

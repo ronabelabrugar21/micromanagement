@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class Add {
 
-    private Scanner scanner;
+    private final Scanner scanner;
 
     public Add(Scanner scanner) {
         this.scanner = scanner;
